@@ -1,19 +1,19 @@
 package com.example.sample;
 
+import android.os.Build;
+import android.os.Bundle;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.os.Build;
-import android.os.Bundle;
-import android.view.View;
-
 import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    TabLayout tabLayout;
-    ViewPager2 viewPager;
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -22,7 +22,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         tabLayout = findViewById(R.id.tabs);
         viewPager = findViewById(R.id.views);
-        final ViewAdapter adapter = new ViewAdapter(getSupportFragmentManager(), getLifecycle());
+
+        ArrayList<String> list1 = new ArrayList<>();
+        list1.add("all");
+        ArrayList<String> list2 = new ArrayList<>();
+        list2.add("system");
+        ArrayList<String> list3 = new ArrayList<>();
+        list3.add("user");
+
+        Bundle bundle = new Bundle();
+        bundle.putStringArrayList("all", list1);
+        bundle.putStringArrayList("system", list2);
+        bundle.putStringArrayList("user", list3);
+
+        ViewAdapter adapter = new ViewAdapter(getSupportFragmentManager(), getLifecycle(), bundle);
         viewPager.setAdapter(adapter);
 
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
